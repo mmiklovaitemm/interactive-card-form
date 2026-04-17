@@ -15,11 +15,14 @@ interface CardDisplayProps {
 }
 
 export const CardDisplay = ({ formData }: CardDisplayProps) => {
+  const basePath =
+    process.env.NODE_ENV === "production" ? "/interactive-card-form" : "";
+
   return (
-    <section className="relative h-[35%] w-full lg:h-screen lg:w-1/3 flex-shrink-0 bg-deep-purple">
+    <section className="relative h-[32%] w-full lg:h-screen lg:w-1/3 flex-shrink-0 bg-deep-purple">
       <div className="absolute inset-0 lg:hidden">
         <Image
-          src="/interactive-card-form/images/bg-main-mobile.png"
+          src={`${basePath}/images/bg-main-mobile.png`}
           alt="Mobile BG"
           fill
           className="object-cover"
@@ -28,7 +31,7 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
       </div>
       <div className="absolute inset-0 hidden lg:block">
         <Image
-          src="/interactive-card-form/images/bg-main-desktop.png"
+          src={`${basePath}/images/bg-main-desktop.png`}
           alt="Desktop BG"
           fill
           className="object-cover"
@@ -36,15 +39,16 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
         />
       </div>
 
-      <div className="absolute top-[35px] lg:top-1/2 left-1/2 -translate-x-1/2 w-full max-w-[343px] lg:top-1/2 lg:left-full lg:-translate-y-1/2 lg:-translate-x-1/2 lg:max-w-none lg:w-auto flex flex-col lg:gap-10 z-20">
+      <div className="absolute top-[30px] lg:top-1/2 left-1/2 -translate-x-1/2 w-full max-w-[343px] lg:top-1/2 lg:left-full lg:-translate-y-1/2 lg:-translate-x-1/2 lg:max-w-none lg:w-auto flex flex-col lg:gap-10 z-20">
+        {/* PRIEKINĖ KORTELĖ  */}
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 self-start w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] lg:-ml-[160px] shadow-2xl text-white scale-[0.85] lg:scale-100 transition-all"
+          className="relative z-10 self-start w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] lg:-ml-[160px] shadow-2xl text-white scale-[0.93] lg:scale-100 transition-all origin-top-left"
         >
           <Image
-            src="/interactive-card-form/images/bg-card-front.png"
+            src={`${basePath}/images/bg-card-front.png`}
             alt="Card Front"
             fill
             className="object-contain rounded-lg"
@@ -52,7 +56,7 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
           <div className="relative flex flex-col h-full justify-between p-5 lg:p-8 z-10">
             <div className="relative w-14 h-8 lg:w-20 lg:h-12">
               <Image
-                src="/interactive-card-form/images/card-logo.svg"
+                src={`${basePath}/images/card-logo.svg`}
                 alt="Logo"
                 fill
                 className="object-contain"
@@ -74,14 +78,15 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
           </div>
         </motion.div>
 
+        {/* GALINĖ KORTELĖ  */}
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="relative -mt-[75px] lg:mt-0 self-end w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] shadow-2xl scale-[0.85] lg:scale-100 transition-all"
+          className="relative -mt-[85px] lg:mt-0 self-end w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] shadow-2xl scale-[0.93] lg:scale-100 transition-all origin-bottom-right"
         >
           <Image
-            src="/interactive-card-form/images/bg-card-back.png"
+            src={`${basePath}/images/bg-card-back.png`}
             alt="Card Back"
             fill
             className="object-contain rounded-lg"

@@ -79,10 +79,10 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen flex-col lg:flex-row font-space bg-white overflow-hidden">
+    <main className="flex h-screen max-h-screen flex-col lg:flex-row font-space bg-white overflow-hidden">
       <CardDisplay formData={formData} />
 
-      <section className="flex flex-1 flex-col items-center justify-center px-6 pt-16 pb-6 lg:pt-0 lg:pb-0">
+      <section className="flex flex-1 flex-col items-center justify-center px-6 pt-18 pb-6 lg:pt-0 lg:pb-0">
         {!isSubmitted ? (
           <CardForm
             formData={formData}
