@@ -15,7 +15,11 @@ export const Success = ({ onContinue }: SuccessProps) => {
       className="flex flex-col items-center text-center w-full max-w-[380px]"
     >
       <div className="relative w-20 h-20 mb-9">
-        <Image src="/images/icon-complete.svg" alt="Complete" fill />
+        <Image
+          src="/interactive-card-form/images/icon-complete.svg"
+          alt="Complete"
+          fill
+        />
       </div>
       <h1 className="text-3xl text-deep-purple uppercase tracking-[3.5px] mb-4 text-[#21092F]">
         Thank you!
