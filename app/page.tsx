@@ -1,65 +1,99 @@
-import Image from "next/image";
+"use client";
+import React, { useState } from "react";
+import { CardDisplay } from "./components/CardDisplay";
+import { CardForm } from "./components/CardForm";
+import { Success } from "./components/Success";
 
 export default function Home() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    number: "",
+    mm: "",
+    yy: "",
+    cvc: "",
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    number: "",
+    mm: "",
+    yy: "",
+    cvc: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value: rawValue } = e.target;
+    let formattedValue = rawValue;
+
+    if (name === "number") {
+      formattedValue = rawValue
+        .replace(/\D/g, "")
+        .replace(/(.{4})/g, "$1 ")
+        .trim()
+        .slice(0, 19);
+    }
+    if (["mm", "yy", "cvc"].includes(name)) {
+      formattedValue = rawValue.replace(/\D/g, "");
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: formattedValue }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors = { name: "", number: "", mm: "", yy: "", cvc: "" };
+    let hasError = false;
+
+    if (!formData.name) {
+      newErrors.name = "Can't be blank";
+      hasError = true;
+    }
+    if (!formData.number) {
+      newErrors.number = "Can't be blank";
+      hasError = true;
+    } else if (formData.number.length < 19) {
+      newErrors.number = "Wrong format";
+      hasError = true;
+    }
+    if (!formData.mm) {
+      newErrors.mm = "Can't be blank";
+      hasError = true;
+    }
+    if (!formData.yy) {
+      newErrors.yy = "Can't be blank";
+      hasError = true;
+    }
+    if (!formData.cvc) {
+      newErrors.cvc = "Can't be blank";
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+    if (!hasError) setIsSubmitted(true);
+  };
+
+  const handleContinue = () => {
+    setFormData({ name: "", number: "", mm: "", yy: "", cvc: "" });
+    setIsSubmitted(false);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="flex h-screen flex-col lg:flex-row font-space bg-white overflow-hidden">
+      <CardDisplay formData={formData} />
+
+      <section className="flex flex-1 flex-col items-center justify-center px-6 pt-16 pb-6 lg:pt-0 lg:pb-0">
+        {!isSubmitted ? (
+          <CardForm
+            formData={formData}
+            errors={errors}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+          />
+        ) : (
+          <Success onContinue={handleContinue} />
+        )}
+      </section>
+    </main>
   );
 }
