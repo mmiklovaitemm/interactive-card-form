@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // basePath: "/interactive-card-form",
+  basePath: "/interactive-card-form",
 };
 
 export default nextConfig;

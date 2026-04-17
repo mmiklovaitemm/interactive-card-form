@@ -19,7 +19,8 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
     process.env.NODE_ENV === "production" ? "/interactive-card-form" : "";
 
   return (
-    <section className="relative h-[32%] w-full lg:h-screen lg:w-1/3 flex-shrink-0 bg-deep-purple">
+    <section className="relative h-[240px] lg:h-screen w-full lg:w-1/3 flex-shrink-0 bg-deep-purple">
+      {/* FONAI */}
       <div className="absolute inset-0 lg:hidden">
         <Image
           src={`${basePath}/images/bg-main-mobile.png`}
@@ -39,13 +40,14 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
         />
       </div>
 
-      <div className="absolute top-[30px] lg:top-1/2 left-1/2 -translate-x-1/2 w-full max-w-[343px] lg:top-1/2 lg:left-full lg:-translate-y-1/2 lg:-translate-x-1/2 lg:max-w-none lg:w-auto flex flex-col lg:gap-10 z-20">
-        {/* PRIEKINĖ KORTELĖ  */}
+      {/* KONTEINERIS KORTELĖMS */}
+      <div className="absolute top-[15%] lg:top-1/2 left-1/2 -translate-x-1/2 w-full max-w-[343px] lg:top-1/2 lg:left-full lg:-translate-y-1/2 lg:-translate-x-1/2 lg:max-w-none lg:w-auto flex flex-col lg:gap-10 z-20">
+        {/* 1. PRIEKINĖ KORTELĖ */}
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 self-start w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] lg:-ml-[160px] shadow-2xl text-white scale-[0.93] lg:scale-100 transition-all origin-top-left"
+          className="relative z-10 self-start w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] lg:-ml-[160px] shadow-2xl text-white scale-[1] lg:scale-100 transition-all origin-left order-2 lg:order-1 mt-[-90px] lg:mt-0"
         >
           <Image
             src={`${basePath}/images/bg-card-front.png`}
@@ -78,12 +80,12 @@ export const CardDisplay = ({ formData }: CardDisplayProps) => {
           </div>
         </motion.div>
 
-        {/* GALINĖ KORTELĖ  */}
+        {/* 2. GALINĖ KORTELĖ  */}
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="relative -mt-[85px] lg:mt-0 self-end w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] shadow-2xl scale-[0.93] lg:scale-100 transition-all origin-bottom-right"
+          className="relative self-end w-[286px] h-[157px] lg:w-[447px] lg:h-[245px] shadow-2xl scale-[1] lg:scale-100 transition-all origin-right order-1 lg:order-2"
         >
           <Image
             src={`${basePath}/images/bg-card-back.png`}
